@@ -59,8 +59,26 @@ build: ## Build the application
 	./gradlew build
 
 .PHONY: run
-run: ## Run the application
-	./gradlew run
+run: ## Run the application (local environment)
+	KTOR_ENV=local ./gradlew run
+
+.PHONY: run-local
+run-local: ## Run with local environment
+	KTOR_ENV=local ./gradlew run
+
+.PHONY: run-dev
+run-dev: ## Run with dev environment
+	KTOR_ENV=dev ./gradlew run
+
+.PHONY: run-stg
+run-stg: ## Run with staging environment
+	KTOR_ENV=stg ./gradlew run
+
+.PHONY: run-prod
+run-prod: ## Run with production environment (use with caution!)
+	@echo "⚠️  WARNING: Running with production configuration!"
+	@read -p "Are you sure? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
+	KTOR_ENV=prod ./gradlew run
 
 .PHONY: test
 test: ## Run tests
